@@ -1,0 +1,117 @@
+{% extends 'base2.html' %}
+	<!-- page -->
+
+	{% block body %}
+	<div class="services-breadcrumb">
+		<div class="agile_inner_breadcrumb">
+			<div class="container">
+				<ul class="w3_short">
+					<li>
+						<a href="index.html">Home</a>
+						<i>|</i>
+					</li>
+					<li>Checkout</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- //page -->
+	<!-- checkout page -->
+	<div class="privacy">
+		<div class="container">
+			<!-- tittle heading -->
+			<h3 class="tittle-w3l">Checkout
+				<span class="heading-style">
+					<i></i>
+					<i></i>
+					<i></i>
+				</span>
+			</h3>
+			<!-- //tittle heading -->
+			<div class="checkout-right">
+				<h4>Your shopping cart contains:
+					<span> Products</span>
+				</h4>
+				<div class="table-responsive">
+					<table class="timetable_sub">
+						<thead>
+							<tr>
+								<th>SL No.</th>
+							
+								<th>Product</th>
+								<th>Product Name</th>
+								<th>Quantity</th>
+								
+
+								<th>Price</th>
+								<th>Total Price</th>
+								
+							</tr>
+						</thead>
+						<tbody>
+
+						{% for order_item in object.products.all %}
+							<tr class="rem1">
+								<td class="invert">{{forloop.counter}}</td>
+								<td class="invert-image">
+									
+									<a href="single2.html">
+										<img src="{{baseurl}}/{{order_item.item_details.img}}"alt=" " class="img-responsive">
+									</a>
+								</td>
+								<td class="invert">
+									<div class="quantity">
+		
+										<span>{{order_item.item_details.name}}</span>	
+										
+									</div>
+								</td>
+								<td class="invert"><a href="{% url 'loyaltypoints:remove-single-item-from-cart' order_item.item_details.slug %}"><i class="fa fa-minus " ></a></i>&nbsp;&nbsp;
+									{{ order_item.quantity }}&nbsp;&nbsp;
+									<a href="{% url 'loyaltypoints:add-to-cart' order_item.item_details.slug %}"><i class="fa fa-plus " ></i></a>
+								</td>
+								<td class="invert">Rs {{ order_item.item_details.price }}</td>
+								<td class="invert">Rs {{ order_item.get_total_item_price }}</td>
+									
+								
+								
+							</tr>
+													
+							{% endfor %}
+			
+        	
+			
+       
+						</tbody>
+					</table>
+				</div>
+			</div>
+	
+		
+		
+			
+
+			<br><br><br>
+			<h4><b>Order Total Amount :</b>&nbsp; <b>{{ object.total_price }}</b></h4><BR><BR><BR>
+
+			
+			<h4><b>Total Points Available :</b>&nbsp; <b>{{ profile.total_points|floatformat:2 }}&nbsp;&nbsp;<i class="fa fa-money"></i></b></h4><BR><BR><BR>
+			<!--
+				<form action="http://127.0.0.1:8000/order-summary1/" method="POST">
+				
+				  {% csrf_token %}
+				<div class="styled-input">
+					<input type="number" placeholder="Redeem Points" name="Redeempoints" id="Redeempoints" max=100 >
+				</div>
+				<input type="submit" value="Redeem">
+			</form>
+-->
+				
+			
+		<h4 style="text-align: center;"><a href="{{ object.get_orderid2 }}"><b>Proceed to Checkout</b></a></h4><br><br>
+		<h4 style="text-align: center;"><a href="http://127.0.0.1:8000/"><b>Continue Shopping</b></a></h4>
+			
+
+	{% endblock %}
+	<!-- //checkout page -->
+	

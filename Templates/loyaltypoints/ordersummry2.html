@@ -1,0 +1,87 @@
+{% extends 'base2.html' %}
+
+{% block body %}
+
+<div class="checkout-left">
+    <div class="address_form_agile">
+        <h5 style="float: right;">Order Total Amount : {{order_obj.total_price }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h5>
+        <h5 style="float: right;">Total Points : {{ profile.total_points|floatformat:2 }}&nbsp;&nbsp;&nbsp;<i class="fa fa-money"></i>&nbsp;&nbsp;&nbsp;</h5>
+   
+        
+        
+        <form action="#" method="post" class="creditly-card-form agileinfo_form" id="complete">
+            
+            {% csrf_token %}
+            
+            {% if profile.totalredeem %}
+            <h4>You have Enough Points to Redeem if You want You can Redeem </h4>
+            <p style="color: black;">Max Points Can be Redeem is 100 : 1 Points = 1 Rupees</p>
+            <div class="controls"  >
+                <label >Redeem Your Points :</label>&nbsp;
+               <input type="number"  name="redeempoints" id="redeempoints" min=0 max=100 value=0 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                
+            </div><br>
+            
+            {% else %}
+            {% endif %}
+            
+          
+          <h4 style="text-align: center;">Complete Your Order</h4>
+            
+            <div class="creditly-wrapper wthree, w3_agileits_wrapper">
+                <div class="information-wrapper">
+                    <div class="first-row">
+                        <div class="controls">
+                            <input class="billing-address-name" type="text" name="name" id="name" placeholder="Full Name" required="">
+                        </div>
+                        <div class="w3_agileits_card_number_grids">
+                            <div class="w3_agileits_card_number_grid_left">
+                                <div class="controls">
+                                    <input type="text" placeholder="Mobile Number" name="number" id="number" required="">
+                                </div>
+                            </div>
+                            <div class="w3_agileits_card_number_grid_right">
+                                <div class="controls">
+                                    <input type="text" placeholder="Address" name="addresss" id="addresss" required="">
+                                </div>
+                            </div>
+                            <div class="w3_agileits_card_number_grid_right">
+                            <div class="controls">
+                                <input type="text" placeholder="Town/City" name="cityy" id="cityy" required="">
+                            </div>
+                        </div>
+
+             
+
+                        
+                        
+                            <div class="clear"> </div>
+                        </div>
+                        
+                        
+                        
+                    </div>
+                 <a href = <a href="{% url 'loyaltypoints:complete-order2' %}search/{{order_obj.orderid}}">  <button class="submit check_out">Delivery to this Address</button></a>
+                    
+                </div>
+            </div>
+        </form>
+        
+
+    </div>
+    <div class="clearfix"> </div>
+</div>
+</div>
+</div>
+<!--
+<h4><a href="{{ object.get_orderid1 }}">Do You Wish To Continue With Default Address</a></h4>-->
+
+    {% if messages %}
+    {% for message in messages %}
+
+<script>
+    alert({{message}}{{object.orderrefid}})
+</script>
+{% endfor %}
+{% endif %}
+{% endblock %}

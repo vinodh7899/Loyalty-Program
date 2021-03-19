@@ -1,0 +1,50 @@
+{% extends 'base2.html' %}
+
+{% block body %}
+
+<div class="checkout-left">
+    <div class="address_form_agile">
+        <h5 style="float: right;">Order Total Amount : {{order_obj.total_price }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h5>
+        <h5 style="float: right;">Total Points : {{ profile.total_points|floatformat:2 }}&nbsp;&nbsp;&nbsp;</h5>
+        
+        
+        
+        <form action="{{ order_obj.get_orderid2 }}" method="post" class="creditly-card-form agileinfo_form">
+            
+            {% csrf_token %}
+
+            {% if profile.totalredeem %}
+            <br><br>
+            <p style="color: black; float: right;">&nbsp;Max Points Can be Redeem is 100 : 1 Points = 1 Rupees</p><br><br>
+            <div class="controls" style="float: right;" >
+                <label>&nbsp;<u>Redeem Your Points :</u></label>&nbsp;<br>
+                &nbsp;<input type="number" style="border: 2px solid rgb(19, 18, 18);"  name="redeempoints" id="redeempoints" min=0 max=100  value=0 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                
+            </div><br>
+            
+            {% else %}
+            {% endif %}
+            <br>
+            <h4 style="color: darkslategray;">&nbsp;&nbsp;<u>Complete Your Order</u></h4>
+            <p style="color: rgb(32, 29, 29); " ><span class="font-weight-bold" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Name: </b></span> {{profile.user.first_name}}</p>
+        <p style="color: rgb(32, 29, 29);"><span class="font-weight-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Mobile: </b></span> {{profile.mobile}}</p>
+        <p style="color: rgb(32, 29, 29);"><span class="font-weight-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Delivery Address: </b></span></p>
+        <div class = "redd" >
+        <p style="color: black;"><span class="font-weight-bold">&nbsp;&nbsp; {{profile.default_address}}&nbsp; {{profile.city}}&nbsp;,{{profile.state}}</p>
+        </div>             
+   
+      &nbsp;&nbsp; <button class="submit check_out">Delivery to this Address</button>
+                    
+                </div>
+            </div>
+        </form>
+        
+        
+    </div>
+    <div class="clearfix"> </div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+
+	{% block body %}
+
+	<!-- top Products -->
+	<div class="ads-grid">
+		<div class="container">
+			<!-- tittle heading -->
+			<h3 class="tittle-w3l">Our Top Products
+				<span class="heading-style">
+					<i></i>
+					<i></i>
+					<i></i>
+				</span>
+			</h3>
+			
+			<!-- //tittle heading -->
+			<!-- product left -->
+			
+		
+			{% for pro in produc %}
+			
+	
+			<div class="col-md-4 product-men">
+					<div class="men-thumb-item">
+						<img src="{{baseurl}}/{{pro.img}}" alt="">
+						
+						<span class="product-new-top">New</span>
+					</div>
+					<div class="item-info-product ">
+						<h4>
+							<a href="single.html">{{ pro.name }}</a><p>({{ pro.get_category_display }})</p>
+						</h4>
+						<div class="info-product-price">
+							<span class="item_price">RS {{ pro.price }}</span>
+							<del>Rs {{ pro.discount_price }}</del>
+						</div>
+						{% if user.is_authenticated %}
+						<h3><a href="{{ pro.get_add_to_cart_url }}">ADD To Cart</a></h3>
+						{% else %}
+						<h3>Please Sign in to buy</h3>
+						{% endif %}
+						<br><br><br><br>
+					</div>
+				
+		
+			</div>
+			
+			{% endfor %}
+
+		
+	
+			
+	{% endblock %}
+			
+	
+
+				
+				
+
+
+
+
+				
+

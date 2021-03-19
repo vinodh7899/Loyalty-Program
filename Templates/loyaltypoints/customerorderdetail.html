@@ -1,0 +1,71 @@
+{% extends "base2.html" %}
+
+
+
+
+{% block body %}<!--
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h3>Order Detail</h3><hr>
+            <p><span class="font-weight-bold">Order ID: </span> #ORDER_{{ord_obj.id}}</p>
+            <p><span class="font-weight-bold">Order Status: </span> {{ord_obj.order_status}}</p>
+            <p><span class="font-weight-bold">Order On: </span> {{ord_obj.created_at}}({{ord_obj.created_at|timesince}} ago)</p>
+            <p><span class="font-weight-bold">Customer Information: </span> By {{ord_obj.ordered_by}}, {{ord_obj.mobile}}</p>
+            <p><span class="font-weight-bold">Shipping Address: </span> By {{ord_obj.shipping_address}} ({{ord_obj.email}})</p>-->
+       
+                <tbody>
+                    <div class="table-responsive">
+                        <table class="timetable_sub">
+                            <thead>
+                                <tr>
+                                    <th>SL No.</th>
+                                
+
+                                    <th>Product</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+
+                                 
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                             
+                               
+                                {% for order_item in ord_obj.products.all %}
+                                <tr class="rem1">
+                                    <td class="invert">{{forloop.counter}}</td>
+
+                                    <td class="invert-image">
+									
+                                        <a href="single2.html">
+                                            <img src="{{baseurl}}/{{order_item.item_details.img}}"alt=" " class="img-responsive">
+                                        </a>
+                                    </td>
+                                    
+                                        
+                                        
+                                  
+                                    
+								<td class="invert">Rs {{ order_item.item_details.name }}</td>
+                                <td class="invert">Rs {{ order_item.quantity}}</td>
+                                <td class="invert">Rs {{ order_item.item_details.price }}</td>
+                                   
+         
+                                </tr>
+                                                        
+
+                                
+                                {% endfor %}
+                                
+                            
+                                <h4><b>Order Total Amount :</b>&nbsp; <b>{{ ord_obj.get_total }}</b></h4><BR><BR><BR>
+           
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+{% endblock %}

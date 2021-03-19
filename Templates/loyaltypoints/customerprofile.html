@@ -1,0 +1,80 @@
+{% extends 'base2.html'  %}
+
+{% block body %}
+{% if profile %}
+
+
+
+       <br> <h4 style=" color: darkgreen;" >&nbsp;&nbsp;&nbsp;&nbsp;<b><u>Profile Details</u></b></h4><br>
+        
+            
+        
+        <p style="color: rgb(32, 29, 29); "><span class="font-weight-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name: </span> {{profile.user.first_name}}</p>
+        <p style="color: rgb(32, 29, 29);"><span class="font-weight-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Username: </span> {{profile.user.username}}</p>
+        <p style="color: rgb(32, 29, 29);"><span class="font-weight-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: </span> {{profile.user.email}}</p>
+        <p style="color: rgb(32, 29, 29);"><span class="font-weight-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mobile: </span> {{profile.mobile}}</p>
+        <p style="color: rgb(32, 29, 29);"><span class="font-weight-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Address: </span> {{profile.default_address}},{{profile.city}},{{profile.state}}</p>
+        <p style="color: rgb(32, 29, 29);"><span class="font-weight-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Joined on: </span> {{profile.joined_on}}</p>
+        {% else %}
+<h3>No profile data</h3>
+{% endif %}
+    
+
+        <!-- //page -->
+        <!-- checkout page -->
+        <div class="privacy">
+            <div class="container">
+                <!-- tittle heading -->
+   
+                <!-- //tittle heading -->
+                <div class="checkout-right">
+                    
+                        <h4> Your Orders Details</h4>
+
+                    <div class="table-responsive">
+                        <table class="timetable_sub">
+                            <thead>
+                                <tr>
+                                    <th>SL No.</th>
+                                
+
+                                    <th>Order_Id</th>
+                                    <th>Total Price</th>
+                                    <th>Points Earned</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                             
+                               
+                                {% for order_item in ordereditems %}
+                                <tr class="rem1">
+                                    <td class="invert">{{forloop.counter}}</td>
+                                    <td class="invert">  <a href="{% url 'loyaltypoints:customerorderdetail' order_item.pk %}">    #{{ order_item.orderrefid }}</a></td>
+                                        
+                                        
+                                   
+                                    
+								<td class="invert">Rs {{ order_item.total_price }}</td>
+                                <td class="invert"> {{ order_item.pointsearn1 }}</td>                            
+                            
+                                {% endfor %} 
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br><br><br>
+               
+
+                <h3>Total Points Earned :&nbsp;{{profile.total_points}}&nbsp;&nbsp;<i class="fa fa-money"></i> </h3>
+                
+
+                
+
+        
+
+ 
+
+{% endblock %}

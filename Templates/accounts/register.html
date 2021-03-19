@@ -1,0 +1,68 @@
+{% extends 'regbase.html' %}
+
+{% block body %}
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            
+            <div class="modal-body modal-body-sub_agile">
+                
+                <div class="modal_body_left modal_body_left1">
+                    
+<h3 class="agileinfo_sign">Sign Up</h3>
+{% if messages %}
+<ul class="messages">
+	{% for message in messages %}
+	<p style="color: darkred;">{{ message }} </p> 
+	{% endfor %}
+</ul>
+{% endif %}
+						<p>
+							Come join the Grocery Shoppy! Let's set up your Account.
+						</p>
+						<form action="http://127.0.0.1:8000/register/" method="post">
+							
+							{% csrf_token %}
+							<div class="form-text">
+							 <div class="form-group">
+								<label for="fname">Name<sup style="color: rgb(230, 55, 55);">*</sup>  :  </label>
+								<input  type="text" placeholder="" name="Name" id="Name" required="" oninvalid="this.setCustomValidity('Please Enter Your Name')" oninput="setCustomValidity('')">
+							</div>
+						</div>
+							<div class="styled-input agile-styled-input-top">
+								<input type="text" placeholder="User Name*" name="username" id="username" required="" oninvalid="this.setCustomValidity('Please Enter Username')" oninput="setCustomValidity('')">
+							</div>
+							<div class="styled-input">
+								<input type="email" placeholder="E-mail*" name="Email" id="Email" oninvalid="this.setCustomValidity('Please Enter Valid Email Id eg:V****@mail.com')" oninput="setCustomValidity('')" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}" required="">
+							</div>
+							<div class="styled-input">
+								<input type="tel" placeholder="Phone-No*" name="PhoneNo" id="PhoneNo" oninvalid="this.setCustomValidity('Please Enter Valid Mobile Number')"
+								oninput="setCustomValidity('')" required="" pattern="[6-9]{4}[0-9]{6}">
+							</div>
+							<div class="styled-input agile-styled-input-top">
+								<input type="text" placeholder="Address*" name="address" id="address" oninvalid="this.setCustomValidity('Please Enter Valid Address')" oninput="setCustomValidity('')" required="">
+							</div>
+							<div class="styled-input agile-styled-input-top">
+								<input type="text" placeholder="City*" name="city" id="city" oninvalid="this.setCustomValidity('Please Enter Valid city')" oninput="setCustomValidity('')" required="">
+							</div>
+							<div class="styled-input agile-styled-input-top">
+								<input type="text" placeholder="State*" name="state" id="state" oninvalid="this.setCustomValidity('Please Enter Valid state')" oninput="setCustomValidity('')" required="">
+							</div>
+							
+							<div class="styled-input"> 
+								<input type="password" placeholder="Password*" name="password" id="password" required="">
+							</div>
+							<div class="styled-input">
+								<input type="password" placeholder="Confirm Password*" name="Confirm Password" id="Confirm Password" required="">
+							</div>
+							<input style="color: rgb(12, 12, 12); background-color: #1aafcd;" type="submit" value="Sign Up">
+						</form>
+						<p>
+							<a href="http://127.0.0.1:8000/login/"><h3>Already have an account, Please LOGIN</h3></a>
+						</p>
+                </div>
+                </div>
+    
+</div>
+
+{% endblock body %}

@@ -1,0 +1,28 @@
+{% extends 'base2.html' %}
+
+  
+{% block body %}
+<br><br>
+    <h1 style="text-align: center;"><u>Order Sucessfully Done Have a Nice Day!</u></h1><br>
+
+
+ 
+
+            <div class="container11">
+                <div class="signup-content11">
+
+     <h3 style="text-align: center;">Your Order is Confirmed We Will Contact You Shortly...</h3>
+     <h3 style="text-align: center;">Order Ref ID : #{{object.orderrefid}}</h3>
+                    
+    <br>
+        <h4 style="padding-left: 20px;">Points Earned Through this Order : <span style="color: darkgreen;">+{{object.pointsearn1}}&nbsp;points</span> </h4>&nbsp;&nbsp;&nbsp;
+
+        
+
+<br>
+        <h2 style="text-align: center;"><a href="http://127.0.0.1:8000/">Click Here To go home page</a></h2>
+    </div>
+</div>
+
+
+{% endblock %}
