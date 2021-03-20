@@ -187,7 +187,7 @@ def completeorder2(request,slug):
 
                 userp = userprofile.objects.get(user=request.user)
                 
-                if userp.total_points>=500 :
+                if userp.total_points>=500  :
                     tota = userp.total_points-redeem
                     userp.total_points = tota
                     userp.save()
