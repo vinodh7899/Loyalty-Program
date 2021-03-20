@@ -36,7 +36,7 @@
 								<input type="email" placeholder="E-mail*" name="Email" id="Email" oninvalid="this.setCustomValidity('Please Enter Valid Email Id eg:V****@mail.com')" oninput="setCustomValidity('')" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}" required="">
 							</div>
 							<div class="styled-input">
-								<input type="tel" placeholder="Phone-No*" name="PhoneNo" id="PhoneNo" oninvalid="this.setCustomValidity('Please Enter Valid Mobile Number')"
+								<input type="tel" placeholder="Phone-No*" name="PhoneNo" id="PhoneNo" oninvalid="this.setCustomValidity('Please Enter Valid 10 digit Mobile Number')"
 								oninput="setCustomValidity('')" required="" pattern="[6-9]{4}[0-9]{6}">
 							</div>
 							<div class="styled-input agile-styled-input-top">
@@ -50,10 +50,10 @@
 							</div>
 							
 							<div class="styled-input"> 
-								<input type="password" placeholder="Password*" name="password" id="password" required="">
+								<input type="password" placeholder="Password*" name="password" id="password" required="" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
 							</div>
 							<div class="styled-input">
-								<input type="password" placeholder="Confirm Password*" name="Confirm Password" id="Confirm Password" required="">
+								<input type="password" placeholder="Confirm Password*" name="Confirm Password" id="Confirm Password" required="" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"  >
 							</div>
 							<input style="color: rgb(12, 12, 12); background-color: #1aafcd;" type="submit" value="Sign Up">
 						</form>

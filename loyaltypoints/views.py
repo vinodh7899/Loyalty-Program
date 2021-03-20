@@ -101,6 +101,7 @@ class Checkout(View):
             order2 = order.objects.get(user=self.request.user, ordered=False)
             order2.total_price = order2.get_total()
             order2.save()
+            coi = loyaltycoins.objects.filter(user=self.request.user,points_exp__lt=datetime.now()).update(point_status=True)
             total_pric=loyaltycoins.objects.filter(user=self.request.user,point_status=False).aggregate(Sum('points_earned')) 
             total_redeem1=loyaltycoins.objects.filter(user=self.request.user,point_status=False).aggregate(Sum('points_redeem')) 
             if total_pric.get('points_earned__sum'):

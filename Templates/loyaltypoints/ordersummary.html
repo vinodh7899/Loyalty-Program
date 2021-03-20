@@ -1,4 +1,4 @@
-{% extends 'base2.html' %}
+{% extends 'regbase.html' %}
 
 {% block body %}
 
@@ -16,16 +16,21 @@
             {% if profile.totalredeem %}
             <br><br>
             <p style="color: black; float: right;">&nbsp;Max Points Can be Redeem is 100 : 1 Points = 1 Rupees</p><br><br>
-            <div   >
-                <label style="float: right;">&nbsp;<u>Redeem Your Points :</u></label>&nbsp;<br>
-                &nbsp;<input type="number" style="border: 2px solid rgb(19, 18, 18); float: right;"  name="redeempoints" id="redeempoints" min=0 max=100  value=0 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                
+            <div >
+                <div class="col-2">
+                    <div class="input-group">
+                <label class="label" >&nbsp;<u>Redeem Your Points :</u></label>
+                <div class="input-group-icon">
+             <input class="input--style-4" type="number" style="border: 2px ridge rgb(19, 18, 18);margin: 5px 50px 5px;"  name="redeempoints" id="redeempoints" min=0 max=100  value=0 >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+                    </div>
+                </div>
             </div><br>
             
             {% else %}
             {% endif %}
             <br>
-            <h4 style="color: darkslategray;">&nbsp;&nbsp;<u>Complete Your Order</u></h4>
+            <h3 style="color: darkslategray;">&nbsp;&nbsp;Complete Your Order</h3><br>
             <p style="color: rgb(32, 29, 29); " ><span class="font-weight-bold" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Name: </b></span> {{profile.user.first_name}}</p>
         <p style="color: rgb(32, 29, 29);"><span class="font-weight-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Mobile: </b></span> {{profile.mobile}}</p>
         <p style="color: rgb(32, 29, 29);"><span class="font-weight-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Delivery Address: </b></span></p>
