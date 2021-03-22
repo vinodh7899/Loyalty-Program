@@ -13,6 +13,8 @@ urlpatterns =[
     path("ordersuces/<slug>/",referid, name='ordersuces'),
     #path("complete-order2/<slug>/",completeorder2, name='complete-order2'),
     path("customerprofile2/",customerprofile, name='customerprofile2'),
+    path("editprofile/",edit, name='editprofile'),
+    path("addresschange/<slug>/",addressedit, name='addresschange'),
 
     path("customerprofile2/order-<int:pk>/", CustomerOrderDetailView.as_view(),
          name="customerorderdetail"),

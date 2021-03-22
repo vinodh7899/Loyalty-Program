@@ -36,6 +36,7 @@
         <p style="color: rgb(32, 29, 29);"><span class="font-weight-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Delivery Address: </b></span></p>
         <div class = "redd" >
         <p style="color: black;"><span class="font-weight-bold">&nbsp;&nbsp; {{profile.default_address}}&nbsp; {{profile.city}}&nbsp;,{{profile.state}}</p>
+        <p><a href="{{order_obj.get_address}}"><i class="fa fa-edit">&nbsp;&nbsp;Change Your Address</i></a></p>
         </div>             
    
       &nbsp;&nbsp; <button class="submit check_out">Delivery to this Address</button>

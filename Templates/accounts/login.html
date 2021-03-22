@@ -18,26 +18,32 @@
                         <a href="http://127.0.0.1:8000/register">
                             Sign Up Now</a>
                     </p>
+                </p>
+                {% if error_message %}
+                <p class="bg-danger p-d ml-b">{{ error_message }}</p>
+            {% endif %}
+            <br>
+
                     <form action="http://127.0.0.1:8000/login/" method="post">
 
                           {% csrf_token %}
                           <div class="input-group">
-                            <input class="input--style-4" type="text" placeholder="User Name" name="Name" id="Name" required="">
+                            <label >User Name<sup style="color: rgb(230, 55, 55);">*</sup></label>
+                            <div class="input-group-icon">
+                            {{form.username}}
                             </div>
+                          </div>
                         <br>
                         <div class="input-group">
-                            <input class="input--style-4" type="password" placeholder="Password" name="password" id="password" required="">
-                      
+                            <label >Password<sup style="color: rgb(230, 55, 55);">*</sup></label>
+                                    <div class="input-group-icon">
+                            {{form.password}}
                         </div>
+                        </div>
+
                         <button class="btn btn--radius-2 btn--blue" type="submit">Sign In</button>
                  
-                        {% if messages %}
-                        <ul class="messages">
-                            {% for message in messages %}
-                            <p style="color: darkred;">{{ message }} </p> 
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
+                       
                     </form>
                     <div class="clearfix"></div>
                 </div>

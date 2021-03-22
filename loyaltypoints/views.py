@@ -8,6 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import F
 from django.db.models import Sum
 import string
+from .forms import editform
 import random
 from datetime import datetime
 
@@ -24,8 +25,8 @@ def customerprofile(request):
     total_redeem1=loyaltycoins.objects.filter(user=request.user,point_status=False).aggregate(Sum('points_redeem')) 
     details = userprofile.objects.get(user=request.user)
     if total_pric.get('points_earned__sum'):
-            details.total_points = total_pric.get('points_earned__sum')-total_redeem1.get('points_redeem__sum')
-            details.save()
+        details.total_points = total_pric.get('points_earned__sum')-total_redeem1.get('points_redeem__sum')
+        details.save()
     customer = userprofile.objects.get(user=request.user)
     orders = order.objects.filter(user=request.user).order_by("orderid")
     coina = loyaltycoins.objects.filter(user=request.user).order_by("point_id")
@@ -188,7 +189,7 @@ def completeorder2(request,slug):
 
                 userp = userprofile.objects.get(user=request.user)
                 
-                if userp.total_points>=500  :
+                if userp.total_points>500  :
                     tota = userp.total_points-redeem
                     userp.total_points = tota
                     userp.save()
@@ -226,5 +227,81 @@ class CustomerOrderDetailView(DetailView):
             return redirect("/login/")
         return super().dispatch(request, *args, **kwargs)
 
-
+def editprofile(request):
+    
+    profile = userprofile.objects.get(user=request.user)
+    if request.method=="POST":
+        mobile_ = request.POST['mobile']
+        defa_address = request.POST['address']
+        if userprofile.objects.filter(mobile=mobile_).exists():
+                messages.info(request,"Mobile No Aready in Use")
+                return redirect("http://127.0.0.1:8000/editprofile")
+        else:
+            user_update = userprofile.objects.get(user=request.user)
+            user_update.mobile=mobile_
+            user_update.default_address=defa_address
+            user_update.save()
+            return redirect("http://127.0.0.1:8000/customerprofile2")
+    context = {'profile':profile}
+    return render(request,'loyaltypoints/edit_profile.html',context)
    
+def edit(request):
+    userp = userprofile.objects.get(user=request.user)
+    form = editform(initial={'mobile': userp.mobile,'default_address':userp.default_address,"city":userp.city})
+    
+    if request.method == "POST":  
+        form = editform(request.POST) 
+        if form.is_valid():  
+            Mobile_ = form.cleaned_data.get("mobile")
+            Address_ = form.cleaned_data.get("default_address")
+            city_ = form.cleaned_data.get("city")
+            if city_=='Bengaluru':
+                    state_ = 'Karnataka'
+                   
+            elif city_=='Chennai':
+                state_ = 'Tamil Nadu'
+                    
+            elif city_=='Hyderabad':
+                state_ = 'Telangana'
+            user_update = userprofile.objects.get(user=request.user)
+            user_update.mobile=Mobile_
+            user_update.default_address=Address_
+            user_update.city=city_
+            user_update.state=state_
+            user_update.save()
+            return redirect("http://127.0.0.1:8000/customerprofile2")      
+    context = {'form':form,'userp':userp} 
+    return render(request,"loyaltypoints/edit_profile.html",context)
+
+def addressedit(request,slug):
+    userp = userprofile.objects.get(user=request.user)
+    form = editform(initial={'mobile': userp.mobile,'default_address':userp.default_address,"city":userp.city})
+
+    if request.method == "POST":  
+        form = editform(request.POST) 
+        if form.is_valid():  
+            Mobile_ = form.cleaned_data.get("mobile")
+            Address_ = form.cleaned_data.get("default_address")
+            city_ = form.cleaned_data.get("city")
+            if city_=='Bengaluru':
+                    state_ = 'Karnataka'
+                   
+            elif city_=='Chennai':
+                state_ = 'Tamil Nadu'
+                    
+            elif city_=='Hyderabad':
+                state_ = 'Telangana'
+            user_update = userprofile.objects.get(user=request.user)
+            user_update.mobile=Mobile_
+            user_update.default_address=Address_
+            user_update.city=city_
+            user_update.state=state_
+            user_update.save()
+            return redirect("loyaltypoints:complete-order2", slug=slug)     
+    context = {'form':form,'userp':userp} 
+    return render(request,"loyaltypoints/changeaddress.html",context)
+
+
+
+
+

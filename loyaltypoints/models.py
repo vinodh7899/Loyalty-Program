@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from django.conf import settings
 import random
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 from django.db.models import F
 from datetime import datetime,timedelta 
 
@@ -10,6 +12,13 @@ CATEGORY_CHOICES = (
     ('N','Nuts'),
     ('O','Oils'),
     ('P','Pasta'),
+)
+
+
+CITY_CHOICES = (
+    ('Bengaluru','Bengaluru'),
+    ('Chennai','Chennai'),
+    ('Hyderabad','Hyderabad'),
 )
 
 class Item(models.Model):
@@ -58,7 +67,6 @@ class order(models.Model):
     start_date = models.DateTimeField(auto_now_add=True)
     ordered = models.BooleanField(default=False)
     total_price = models.FloatField(default=0)
-
     orderrefid = models.CharField(max_length=20, blank=True, null=True)
 
     def get_total(self):
@@ -93,7 +101,10 @@ class order(models.Model):
         return reverse("loyaltypoints:complete-order2", kwargs={
             'slug': self.orderid
         })
-
+    def get_address(self):
+        return reverse("loyaltypoints:addresschange", kwargs={
+            'slug': self.orderid
+        })
 
 
         
@@ -111,16 +122,19 @@ class order_details(models.Model):
 
 class userprofile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    mobile = models.IntegerField()
-    default_address = models.TextField()
-    city = models.TextField(blank=True,null=True)
-    state = models.TextField(blank=True,null=True)
+    mobile = models.CharField(max_length=12,blank=True)
+    default_address = models.CharField(max_length=500)
+    city = models.CharField(choices=CITY_CHOICES,max_length=10)
+    state = models.CharField(max_length=500,null=True,blank=True)
     joined_on = models.DateTimeField(auto_now_add=True)
     total_points = models.IntegerField(default=0)
+
+
 
     def totalredeem(self):
         if self.total_points>=500:
             return self
+
 
 def get_deadline():
     return datetime.today() + timedelta(days=365)

@@ -5,10 +5,12 @@
 
 
 
-       <br> <h4 style=" color: darkgreen;" >&nbsp;&nbsp;&nbsp;&nbsp;<b><u>Profile Details</u></b></h4><br>
+    
+       <h4 style=" color: darkgreen;margin-left: 80%;" ><b><u><a href="http://127.0.0.1:8000/editprofile/"><i class="fa fa-edit">&nbsp;&nbsp;Edit Profile Details</i></a></u></b></h4><br>
+       <h4 style=" color: darkgreen;margin-left: 80%;" ><b><u><a href="http://127.0.0.1:8000/change-password/"><i class="fa fa-edit">&nbsp;&nbsp;Change Password</i></a></u></b></h4>
         
             
-        
+       <br> <h4 style=" color: darkgreen;" >&nbsp;&nbsp;&nbsp;&nbsp;<b><u>Profile Details</u></b></h4><br>
         <p style="color: rgb(32, 29, 29); "><span class="font-weight-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name: </span> {{profile.user.first_name}}</p>
         <p style="color: rgb(32, 29, 29);"><span class="font-weight-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Username: </span> {{profile.user.username}}</p>
         <p style="color: rgb(32, 29, 29);"><span class="font-weight-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email: </span> {{profile.user.email}}</p>
@@ -51,9 +53,7 @@
                                 <tr class="rem1">
                                     <td class="invert">{{forloop.counter}}</td>
                                     <td class="invert">  <a href="{% url 'loyaltypoints:customerorderdetail' order_item.pk %}">    #{{ order_item.orderrefid }}</a></td>
-                                        
-                                        
-                                   
+
                                     
 								<td class="invert">Rs {{ order_item.total_price }}</td>
                                 <td class="invert"> {{ order_item.pointsearn1 }}</td>                            
