@@ -111,7 +111,19 @@ def register_user(request):
                     'form': form,
                     'error_message': 'Passwords do not match.'
                 })
-             
+
+            elif len(form.cleaned_data['Name'])<3:
+                return render(request, template, {
+                    'form': form,
+                    'error_message': 'Please Enter a Valid Name'
+                })
+
+            elif len(form.cleaned_data['username'])<3:
+                return render(request, template, {
+                    'form': form,
+                    'error_message': 'Please Enter a Valid User Name'
+                })
+
          
             else:
                 # Create the user:
@@ -120,7 +132,7 @@ def register_user(request):
                     form.cleaned_data['email'],
                     form.cleaned_data['password']
                 )
-                user1.first_name = form.cleaned_data['first_name']
+                user1.first_name = form.cleaned_data['Name']
                 user1.save()
                 city_ = form.cleaned_data['city']
 

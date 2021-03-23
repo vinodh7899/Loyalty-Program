@@ -11,6 +11,7 @@ import string
 from .forms import editform
 import random
 from datetime import datetime
+from django.http import HttpResponse
 
 def create_ref_code(size=10, chars= string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
@@ -20,19 +21,33 @@ def products(request):
     return render(request,'loyaltypoints/index.html',{'produc':prod_list})
 
 def customerprofile(request):
-    coi = loyaltycoins.objects.filter(user=request.user,points_exp__lt=datetime.now()).update(point_status=True)
-    total_pric=loyaltycoins.objects.filter(user=request.user,point_status=False).aggregate(Sum('points_earned')) 
+    details = loyaltycoins.objects.filter(user=request.user,points_exp__lt=datetime.now())
+    for detai in details:
+        detai.point_status=True
+     
+        detai.save()
+    #coi = loyaltycoins.objects.filter(user=request.user,points_exp__lt=datetime.now()).update(point_status=True)
+   
+    total_earned=loyaltycoins.objects.filter(user=request.user,point_status=False).aggregate(Sum('points_earned')) 
     total_redeem1=loyaltycoins.objects.filter(user=request.user,point_status=False).aggregate(Sum('points_redeem')) 
+    if not total_redeem1.get('points_redeem__sum'):
+        total_redeem1['points_redeem__sum']=0
+   
     details = userprofile.objects.get(user=request.user)
-    if total_pric.get('points_earned__sum'):
-        details.total_points = total_pric.get('points_earned__sum')-total_redeem1.get('points_redeem__sum')
-        details.save()
+    if not total_earned.get('points_earned__sum'):
+        total_earned['points_earned__sum']=0
+
+  
+    details.total_points=total_earned.get('points_earned__sum')-total_redeem1.get('points_redeem__sum')
+    details.save()
+    
     customer = userprofile.objects.get(user=request.user)
     orders = order.objects.filter(user=request.user).order_by("orderid")
     coina = loyaltycoins.objects.filter(user=request.user).order_by("point_id")
-    context={'profile':customer,"ordereditems":orders,'loyal':coina}
+    context={'profile':customer,"ordereditems":zip(orders,coina),'loyal':coina,'total_redeem':total_redeem1.get('points_redeem__sum'),'total_earned':total_earned.get('points_earned__sum')}
     return render(request, "loyaltypoints/customerprofile.html",context)
 
+   
 
 def add_to_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
@@ -137,6 +152,8 @@ def completeorder2(request,slug):
             if userpro.total_points>=500:
                 redeemp = request.POST['redeempoints']
                 redeem = float(redeemp)
+            else:
+                redeem=0
             if order is not None:
 
                 order_update = order.objects.get(user=request.user,ordered=False)
@@ -159,6 +176,8 @@ def completeorder2(request,slug):
                         
                         if userpro.total_points>=500:
                             coin = loyaltycoins.objects.create(user=request.user,points_earned=earned,points_redeem=redeem)
+                            
+                            
                         elif userpro.total_points<500:
                             coin = loyaltycoins.objects.create(user=request.user,points_earned=earned)
                
@@ -169,6 +188,7 @@ def completeorder2(request,slug):
                         coin = loyaltycoins.objects.create(user=request.user,points_earned=earned,points_redeem=redeem)
                     elif userpro.total_points<500:
                         coin = loyaltycoins.objects.create(user=request.user,points_earned=earned)
+                        
 
 
                 elif total>2000:
@@ -180,6 +200,10 @@ def completeorder2(request,slug):
                             coin = loyaltycoins.objects.create(user=request.user,points_earned=earned,points_redeem=redeem)
                         elif userpro.total_points<500:
                             coin = loyaltycoins.objects.create(user=request.user,points_earned=earned)
+
+                
+                coin = loyaltycoins.objects.get(user=request.user,point_id=slug)
+                coin.order_info.add(order2)
                 coi = loyaltycoins.objects.filter(user=request.user,points_exp__lt=datetime.now()).update(point_status=True)
                 total_pric=loyaltycoins.objects.filter(user=request.user,point_status=False).aggregate(Sum('points_earned')) 
                 total_redeem1=loyaltycoins.objects.filter(user=request.user,point_status=False).aggregate(Sum('points_redeem')) 
@@ -188,14 +212,14 @@ def completeorder2(request,slug):
                 details.save()
 
                 userp = userprofile.objects.get(user=request.user)
-                
-                if userp.total_points>500  :
-                    tota = userp.total_points-redeem
-                    userp.total_points = tota
-                    userp.save()
-                    redtota = order2.total_price-redeem
-                    order2.total_price=redtota
-                    order2.save()  
+ 
+
+                tota = userp.total_points-redeem
+                userp.total_points = tota
+                userp.save()
+                redtota = order2.total_price-redeem
+                order2.total_price=redtota
+                order2.save()  
                 return redirect('loyaltypoints:ordersuces',slug=slug)
             else:
 
@@ -226,6 +250,8 @@ class CustomerOrderDetailView(DetailView):
         else:
             return redirect("/login/")
         return super().dispatch(request, *args, **kwargs)
+
+
 
 def editprofile(request):
     

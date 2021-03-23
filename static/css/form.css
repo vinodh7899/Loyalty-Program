@@ -40,7 +40,7 @@
 
 @media (max-width: 767px) {
   .col-2 {
-    width: 100%;
+    width: 80%;
   }
 }
 
@@ -349,19 +349,22 @@ input[type="date" i] {
    ========================================================================== */
 input {
   outline: none;
-  margin: 0;
+  margin-top: 0px;
+  margin-bottom: 22px;
+  margin-right: 150px;
+  margin-left: 0px;
   border: ridge;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  width: 100%;
+  width: 80%;
   font-size: 14px;
   font-family: inherit;
 }
 
 .input--style-4 {
   line-height: 50px;
-  background: #d6eff3;
+  background: white;
   -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
   -moz-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
   box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
@@ -369,6 +372,7 @@ input {
   -moz-border-radius: 5px;
   border-radius: 5px;
   padding: 0 10px;
+  margin :5px ,30px,5px;
   font-size: 16px;
   color: #666;
   -webkit-transition: all 0.4s ease;
@@ -633,6 +637,7 @@ input {
 .card-4 .card-body {
   padding: 57px 65px;
   padding-bottom: 65px;
+  background:rgba(100,149,237,0.4);
 }
 
 @media (max-width: 767px) {

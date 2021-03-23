@@ -27,7 +27,11 @@
         <div class="privacy">
             <div class="container">
                 <!-- tittle heading -->
-   
+               
+                <p style="float: right;"><b>Total Points Earned :&nbsp;{{total_earned}}&nbsp;&nbsp;<i class="fa fa-money"></i></b> </p><br><br>
+                <p style="float: right;"><b>Total Points Redeem :&nbsp;{{total_redeem}}&nbsp;&nbsp;<i class="fa fa-money"></i></b> </p>
+                <h3>Total Points Available :&nbsp;{{profile.total_points}}&nbsp;&nbsp;<i class="fa fa-money"></i> </h3><br>
+                
                 <!-- //tittle heading -->
                 <div class="checkout-right">
                     
@@ -43,38 +47,37 @@
                                     <th>Order Id</th>
                                     <th>Total Price</th>
                                     <th>Points Earned</th>
+                                    <th>Points redeem</th>
+                                    <th>Points status</th>
                                     
                                 </tr>
                             </thead>
                             <tbody>
                              
                                
-                                {% for order_item in ordereditems %}
+                                {% for order_item,points in ordereditems %}
                                 <tr class="rem1">
                                     <td class="invert">{{forloop.counter}}</td>
                                     <td class="invert">  <a href="{% url 'loyaltypoints:customerorderdetail' order_item.pk %}">    #{{ order_item.orderrefid }}</a></td>
 
                                     
 								<td class="invert">Rs {{ order_item.total_price }}</td>
-                                <td class="invert"> {{ order_item.pointsearn1 }}</td>                            
+                                <td class="invert"> {{ points.points_earned }}</td> 
+                                                    
                             
-                                {% endfor %} 
-
+                                <td class="invert"> {{ points.points_redeem }}</td> 
+                                {% if points.point_status %}
+                                <td class="invert"> Expired</td> 
+                                {% else %}
+                                <td class="invert"> Active</td>  
+                                {% endif %} 
+                                {% endfor %}  
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <br><br><br>
-               
 
-                <h3>Total Points Earned :&nbsp;{{profile.total_points}}&nbsp;&nbsp;<i class="fa fa-money"></i> </h3>
-                
-
-                
-
-        
-
- 
 
 {% endblock %}

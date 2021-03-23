@@ -4,92 +4,43 @@
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
                 <div class="card-body">
- 
-                    <h2 class="title" style="text-align: center;">Registration Form</h2>
-                    <p>
+                
+                    <h3 class="title" style="text-align: center;">Registration Form</h3>
+                    <h4 style="color: rgb(61, 85, 68);">
 							Come join the Grocery Shoppy! Let's set up your Account.
-						</p>
+                            {% if form.errors %}
+                            <div class="alert alert-danger alert-dismissible col-12 mx-1" role="alert">
+                                <div id="form_errors">
+                                    {% for key, value in form.errors.items %}
+                                        <span class="fieldWrapper">
+                                            {{ key }}:{{ value }}
+                                        </span>
+                                    {% endfor %}
+                              
+                            {% endif %}
+                    </h4>
                         {% if error_message %}
-                        <p class="bg-danger p-d ml-b">{{ error_message }}</p>
+                        <br>
+                        <p class="bg-danger p-d ml-b" style="color: black;">{{ error_message }}</p>
                     {% endif %}
                     <br>
 						<form action="http://127.0.0.1:8000/register2/" method="post">
                         {% csrf_token %}
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label  class="label" for="fname">Name<sup style="color: rgb(230, 55, 55);">*</sup>  :  </label>
-                                    {{form.first_name}}
-                                </div>
-                            </div>
-                           
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">User Name<sup style="color: rgb(230, 55, 55);">*</sup></label>
-                                    <div class="input-group-icon">
-                                        {{form.username}}
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">E-Mail<sup style="color: rgb(230, 55, 55);">*</sup></label>
-                                    <div class="input-group-icon">
-                                    {{form.email}}
-                                    </div>
-                                </div>
-                            </div>
-                        
-                       
-                    
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Phone Number<sup style="color: rgb(230, 55, 55);">*</sup></label>
-                                    {{form.mobile}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label  class="label" for="fname">Address<sup style="color: rgb(230, 55, 55);">*</sup>  :  </label>
-                                    {{form.default_address}}
-                                </div>
-                            </div>
-                           
-                    
-                        <div class="input-group">
-                            <label class="label">City<sup style="color: rgb(230, 55, 55);">*</sup>:</label>
-                           {{form.city}}
-                        </div>
-                    </div>
-                    <div class="row row-space">
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Password<sup style="color: rgb(230, 55, 55);">*</sup></label>
-                                <div class="input-group-icon">
-                                    {{form.password}}
-                                </div>
-                            </div>
-                        </div>
+
                     
                         <div class="col-2">
                             <div class="input-group">
-                                <label class="label">Confirm Password<sup style="color: rgb(230, 55, 55);">*</sup></label>
+                            
                                 <div class="input-group-icon">
-                                    {{form.confirm_password}}
+                                   {{form}}
+                                  
                                 </div>
                             </div>
                         </div>
-                    </div>
+          
 
                         <div class="p-t-15">
-                           &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                          
                             <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
                             </div>
 
@@ -104,14 +55,5 @@
         </div>
     </div>
 
-    <!-- Jquery JS-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <!-- Vendor JS-->
-    <script src="vendor/select2/select2.min.js"></script>
-    <script src="vendor/datepicker/moment.min.js"></script>
-    <script src="vendor/datepicker/daterangepicker.js"></script>
-
-    <!-- Main JS-->
-    <script src="js/global.js"></script>
 
 {% endblock %}

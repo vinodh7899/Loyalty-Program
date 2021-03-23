@@ -12,7 +12,7 @@ urlpatterns =[
         'change-password/',
         auth_views.PasswordChangeView.as_view(
             template_name='loyaltypoints/password.html',
-            success_url = '/passwordchanged/'
+            success_url = '/logout/'
         ),
         name='change_password'
     ),

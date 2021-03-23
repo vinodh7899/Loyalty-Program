@@ -36,6 +36,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<link href= "{% static 'css/fontsapi.css' %}" rel="stylesheet">
 	<link href="{% static 'css/main.css' %}" rel="stylesheet" media="all">
 	<link href="{% static 'css/form.css' %}" rel="stylesheet" media="all">
+	<link rel="stylesheet" href="{% static 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' %}">
 	<style>
 
 	.modal-body.modal-body-sub_agile input[type="tel"]{
@@ -80,8 +82,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	margin: 5px 50px 5px;
 
  }
+.redeem{
+	float: right;
+	clear: both;
+}
+
+.marg{
+	margin : 5px,20px,5px;
+	
 
 
+}
 	</style>
 </head>
 
@@ -134,7 +145,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					{% else %}
 					<li>
 
-						<a href="http://127.0.0.1:8000/register">
+						<a href="http://127.0.0.1:8000/register2">
 							<span class="fa fa-pencil-square-o" aria-hidden="true"></span> Sign Up </a>
 					</li>
 					{% endif %}
