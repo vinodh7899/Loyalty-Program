@@ -78,7 +78,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     -webkit-box-shadow: 0px 10px 9.9px 0.1px rgba(0, 0, 0, 0.1);
     -o-box-shadow: 0px 10px 9.9px 0.1px rgba(0, 0, 0, 0.1);
     -ms-box-shadow: 0px 10px 9.9px 0.1px rgba(0, 0, 0, 0.1);
-    background: #fff; }
+    background:#d3fff9; }
   
   .signup-content11 {
     padding: 10px 0; }
@@ -124,21 +124,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</li>
 					{% if user.is_authenticated %}
 					<li><a href="http://127.0.0.1:8000/customerprofile2">Welcome {{user.first_name}}</a></li>
-					{% else %}
-					<li>
-						<a href="http://127.0.0.1:8000/login" >
-							<span class="fa fa-unlock-alt" aria-hidden="true"></span> Sign In </a>
-					</li>
+				
+				
 					{% endif %}
 
 					{% if user.is_authenticated %}
 					<li><a href="http://127.0.0.1:8000/logout">Sign Out</a></li>
-					{% else %}
-					<li>
-
-						<a href="http://127.0.0.1:8000/register">
-							<span class="fa fa-pencil-square-o" aria-hidden="true"></span> Sign Up </a>
-					</li>
+				
+					
 					{% endif %}
 				</ul>
 				<!-- //header lists -->

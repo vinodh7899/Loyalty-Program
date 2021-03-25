@@ -182,7 +182,7 @@ h6 {
   background: -webkit-linear-gradient(bottom left, #fffdd0 0%, #fffdd0 100%);
   background: -moz-linear-gradient(bottom left, #fffdd0 0%, #fffdd0 100%);
   background: -o-linear-gradient(bottom left, #fffdd0 0%, #fffdd0 100%);
-  background: linear-gradient(to top right,#fffdd0 0%, #fffdd0 100%);
+  background: linear-gradient(to top right,white 0%, white 100%);
 }
 
 /* ==========================================================================
@@ -193,7 +193,7 @@ h6 {
 }
 
 .p-t-130 {
-  padding-top: 130px;
+  padding-top: 30px;
 }
 
 .p-t-180 {
@@ -353,7 +353,7 @@ input {
   margin-bottom: 22px;
   margin-right: 150px;
   margin-left: 0px;
-  border: ridge;
+  border:2px ridge black;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
@@ -363,7 +363,7 @@ input {
 }
 
 .input--style-4 {
-  line-height: 50px;
+  line-height: 35px;
   background: white;
   -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
   -moz-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
@@ -372,15 +372,33 @@ input {
   -moz-border-radius: 5px;
   border-radius: 5px;
   padding: 0 10px;
-  margin :5px ,30px,5px;
   font-size: 16px;
   color: #666;
   -webkit-transition: all 0.4s ease;
   -o-transition: all 0.4s ease;
   -moz-transition: all 0.4s ease;
   transition: all 0.4s ease;
+
 }
 
+.input--style-3 {
+  line-height: 35px;
+  background: white;
+  -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 0 10px;
+  font-size: 16px;
+  color: #666;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+
+}
 .input--style-4::-webkit-input-placeholder {
   /* WebKit, Blink, Edge */
   color: #666;
@@ -634,10 +652,10 @@ input {
   box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
 }
 
-.card-4 .card-body {
+.card-4 .card-body{
   padding: 57px 65px;
   padding-bottom: 65px;
-  background:rgba(100,149,237,0.4);
+  background:rgba(26,204,253,0.30);
 }
 
 @media (max-width: 767px) {

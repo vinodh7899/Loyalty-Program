@@ -13,21 +13,28 @@
                 <div class="modal_body_left modal_body_left1">
             
                     <h3 class="agileinfo_sign">Edit Profile </h3>
+                    {% if error_message %}
+                <p class="bg-danger p-d ml-b">{{ error_message }}</p>
+            {% endif %}
 
                     <form action="http://127.0.0.1:8000/editprofile/" method="post">
 
                           {% csrf_token %}
+                          <div class="col-2">
+                            <div class="input-group">
+                            
+                                <div class="input-group-icon">
          
-                    {{ form.as_p}}
+                                 {{ form.as_p}}
                         <button class="btn btn--radius-2 btn--blue" type="submit">Confirm to Change</button>
                  
-                       
+                                </div>
+                            </div>
+                          </div>
                     </form>
                 </p>
                 <h3><a href="http://127.0.0.1:8000/customerprofile2/">Click here to go back</a></h3>
-                {% if error_message %}
-                <p class="bg-danger p-d ml-b">{{ error_message }}</p>
-            {% endif %}
+                
             <br>
                     <div class="clearfix"></div>
                 </div>

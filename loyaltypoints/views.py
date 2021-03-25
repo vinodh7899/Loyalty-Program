@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from .models import Item,orderitem,order,order_details,userprofile,loyaltycoins
+from .models import Item,orderitem,order,order_details,userprofile,loyaltycoins,point_master
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.utils import timezone
@@ -140,16 +140,17 @@ class Checkout(View):
 def completeorder2(request,slug):
     objec = order.objects.get(user=request.user,orderid=slug)
     
-    
+    points_track = point_master.objects.get()
     userpro = userprofile.objects.get(user=request.user)
     context = {
         'order_obj':objec,
-        'profile':userpro
+        'profile':userpro,
+        'points_track':points_track
         
     }
 
     if request.method == 'POST':
-            if userpro.total_points>=500:
+            if userpro.total_points>=points_track.min_redeem:
                 redeemp = request.POST['redeempoints']
                 redeem = float(redeemp)
             else:
@@ -166,69 +167,83 @@ def completeorder2(request,slug):
                     item.ordered = True
                     item.save()
                 order2 = order.objects.get(user=request.user,orderid=slug)
-                if userpro.total_points>=500:
+                if userpro.total_points>=points_track.min_redeem:
                     total = order2.total_price-redeem
                 else:
                     total = order2.total_price
-                if total>500 and total<2000:
-                    earned = total*0.02
-                    if earned<=100:
-                        
-                        if userpro.total_points>=500:
-                            coin = loyaltycoins.objects.create(user=request.user,points_earned=earned,points_redeem=redeem)
-                            
-                            
-                        elif userpro.total_points<500:
-                            coin = loyaltycoins.objects.create(user=request.user,points_earned=earned)
+                if total>points_track.from_point and total<points_track.to_point:
+                    earned = total*points_track.percentage1
+
+                    if userpro.total_points>=points_track.min_redeem:
+                        coin = loyaltycoins.objects.create(user=request.user,points_earned=earned,points_redeem=redeem)
+                                 
+                    elif userpro.total_points<points_track.min_redeem:
+                        coin = loyaltycoins.objects.create(user=request.user,points_earned=earned)
                
-                elif total<500:
-                    earned = 0
-                    if userpro.total_points>=500:
+                elif total<points_track.from_point:
+                    earned = points_track.min_points
+                    if userpro.total_points>=points_track.min_redeem:
                         
                         coin = loyaltycoins.objects.create(user=request.user,points_earned=earned,points_redeem=redeem)
-                    elif userpro.total_points<500:
+                    elif userpro.total_points<points_track.min_redeem:
                         coin = loyaltycoins.objects.create(user=request.user,points_earned=earned)
                         
 
 
-                elif total>2000:
+                elif total>points_track.to_point:
                     
-                    earned = total*0.05
-                    if earned>=100:
-                        earned=100
-                        if userpro.total_points>=500:
+                    earned = total*points_track.percentage2
+                    if earned>=points_track.max_points:
+                        earned=points_track.max_points
+                        if userpro.total_points>=points_track.min_redeem:
                             coin = loyaltycoins.objects.create(user=request.user,points_earned=earned,points_redeem=redeem)
-                        elif userpro.total_points<500:
+                        elif userpro.total_points<points_track.min_redeem:
+                            coin = loyaltycoins.objects.create(user=request.user,points_earned=earned)
+                    else:
+                        if userpro.total_points>=points_track.min_redeem:
+                            coin = loyaltycoins.objects.create(user=request.user,points_earned=earned,points_redeem=redeem)
+                                 
+                        elif userpro.total_points<points_track.min_redeem:
                             coin = loyaltycoins.objects.create(user=request.user,points_earned=earned)
 
+
                 
-                coin = loyaltycoins.objects.get(user=request.user,point_id=slug)
-                coin.order_info.add(order2)
+                
                 coi = loyaltycoins.objects.filter(user=request.user,points_exp__lt=datetime.now()).update(point_status=True)
-                total_pric=loyaltycoins.objects.filter(user=request.user,point_status=False).aggregate(Sum('points_earned')) 
+                total_earned=loyaltycoins.objects.filter(user=request.user,point_status=False).aggregate(Sum('points_earned')) 
                 total_redeem1=loyaltycoins.objects.filter(user=request.user,point_status=False).aggregate(Sum('points_redeem')) 
+                if not total_redeem1.get('points_redeem__sum'):
+                    total_redeem1['points_redeem__sum']=0
+   
                 details = userprofile.objects.get(user=request.user)
-                details.total_points = total_pric.get('points_earned__sum')-total_redeem1.get('points_redeem__sum')
+                if not total_earned.get('points_earned__sum'):
+                    total_earned['points_earned__sum']=0
+
+  
+                details.total_points=total_earned.get('points_earned__sum')-total_redeem1.get('points_redeem__sum')
                 details.save()
 
                 userp = userprofile.objects.get(user=request.user)
  
 
-                tota = userp.total_points-redeem
-                userp.total_points = tota
+                totall = userp.total_points-redeem
+                userp.total_points = totall
                 userp.save()
-                redtota = order2.total_price-redeem
-                order2.total_price=redtota
-                order2.save()  
-                return redirect('loyaltypoints:ordersuces',slug=slug)
+                redeem_total = order2.total_price-redeem
+                order2.total_price=redeem_total
+                order2.save()
+                final = loyaltycoins.objects.last()
+                return redirect('loyaltypoints:ordersuces',slug=final.point_id)
             else:
 
                 return redirect('loyaltypoints:order-summary')
     return render(request,'loyaltypoints/ordersummary.html',context)
 
 def referid(request,slug):
-    order3 = order.objects.get(user=request.user,orderid=slug)
-    coina = loyaltycoins.objects.filter(user=request.user).order_by("point_id")
+    orde2 = order.objects.last()
+    id1 = orde2.orderid
+    order3 = order.objects.get(user=request.user,orderid=id1)
+    coina = loyaltycoins.objects.get(user=request.user,point_id=slug)
     userpro = userprofile.objects.get(user=request.user)
     return render(request,'loyaltypoints/ordersuces.html',{'object':order3,'user':userpro,'point':coina})
 
@@ -276,13 +291,14 @@ def edit(request):
     form = editform(initial={'mobile': userp.mobile,'default_address':userp.default_address,"city":userp.city})
     
     if request.method == "POST":  
-        form = editform(request.POST) 
+        form = editform(request.POST)
         if form.is_valid():  
             Mobile_ = form.cleaned_data.get("mobile")
             Address_ = form.cleaned_data.get("default_address")
             city_ = form.cleaned_data.get("city")
+
             if city_=='Bengaluru':
-                    state_ = 'Karnataka'
+                state_ = 'Karnataka'
                    
             elif city_=='Chennai':
                 state_ = 'Tamil Nadu'
@@ -309,8 +325,9 @@ def addressedit(request,slug):
             Mobile_ = form.cleaned_data.get("mobile")
             Address_ = form.cleaned_data.get("default_address")
             city_ = form.cleaned_data.get("city")
+
             if city_=='Bengaluru':
-                    state_ = 'Karnataka'
+                state_ = 'Karnataka'
                    
             elif city_=='Chennai':
                 state_ = 'Tamil Nadu'

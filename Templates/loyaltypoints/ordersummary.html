@@ -12,7 +12,6 @@
         <form action="{{ order_obj.get_orderid2 }}" method="post" class="creditly-card-form agileinfo_form">
             
             {% csrf_token %}
-
             {% if profile.totalredeem %}
             <br><br>
             <p style="color: black; float: right;">&nbsp;Max Points Can be Redeem is 100 : 1 Points = 1 Rupees</p><br><br>

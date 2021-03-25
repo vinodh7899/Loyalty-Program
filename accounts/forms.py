@@ -8,6 +8,7 @@ CITY_CHOICES =(
     ("Chennai", "Chennai"), 
     ("Hyderabad", "Hyderabad"),
 )
+
 class RegisterForm(forms.Form):
     Name = forms.CharField(widget=forms.TextInput(attrs={'class':"input--style-4",'pattern':'[A-Za-z ]+', 'title':'Enter Characters Only '}))
     username = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-4'}))
@@ -21,6 +22,8 @@ class RegisterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.fields['city'].widget.attrs['class'] = 'input--style-4'
+        
+
 
     def clean(self):
       super(RegisterForm, self).clean()

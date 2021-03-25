@@ -129,6 +129,9 @@ class userprofile(models.Model):
     joined_on = models.DateTimeField(auto_now_add=True)
     total_points = models.IntegerField(default=0)
 
+    def datepublished(self):
+        return self.joined_on.strftime('%B %d %Y')
+
 
 
     def totalredeem(self):
@@ -149,13 +152,19 @@ class loyaltycoins(models.Model):
     point_id = models.IntegerField(primary_key=True)
     order_info = models.ManyToManyField(order)
 
-  
-
-
     def loyalid(self):
         return reverse("loyaltypoints:ordersuces", kwargs={
             'slug': self.point_id
         })
 
         
+class point_master(models.Model):
+    from_point = models.IntegerField()
+    to_point = models.IntegerField()
+    percentage1 = models.FloatField()
+    percentage2 = models.FloatField()
+    max_points = models.IntegerField()
+    min_points = models.IntegerField()
+    min_redeem = models.IntegerField()
+    point_conversion = models.IntegerField()
 
