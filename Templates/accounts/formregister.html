@@ -8,6 +8,7 @@
                     <h3 class="title" style="text-align: center;">Registration Form</h3>
                     <h4 style="color: rgb(61, 85, 68);">
 							Come join the Grocery Shoppy! Let's set up your Account.
+                            <!--
                             {% if form.errors %}
                           <div class="alert alert-danger alert-dismissible col-12 mx-1" role="alert">
                                <div>
@@ -17,17 +18,20 @@
                                             {{ key }}:{{ value|escape }}
                                         </span>
                                     {% endfor %}
+                                </div>
+                               </div>
+                          </div>
 
                               
-                            {% endif %}
+                            {% endif %}-->
                             
                     </h4>
                         {% if error_message %}
                         <br>
-                        <p class="bg-danger p-d ml-b" style="color: black;">{{ error_message }}</p>
+                        <p  style="color: rgb(240, 6, 6);">{{ error_message }}</p>
                     {% endif %}
                     <br>
-						<form action="http://127.0.0.1:8000/register2/" method="post" >
+						<form action="http://127.0.0.1:8000/register2/" method="post"  novalidate>
                         {% csrf_token %}
 
                     
@@ -35,6 +39,7 @@
                             <div class="input-group">
                             
                                 <div class="input-group-icon">
+                              
                                    {{form.as_p}}
                                   
                                 </div>

@@ -45,10 +45,12 @@
                                 
 
                                     <th>Order Id</th>
+                                    <th>Date Time</th>
                                     <th>Total Price</th>
                                     <th>Points Earned</th>
                                     <th>Points redeem</th>
                                     <th>Points status</th>
+                                    
                                     
                                 </tr>
                             </thead>
@@ -59,7 +61,7 @@
                                 <tr class="rem1">
                                     <td class="invert">{{forloop.counter}}</td>
                                     <td class="invert">  <a href="{% url 'loyaltypoints:customerorderdetail' order_item.pk %}">    #{{ order_item.orderrefid }}</a></td>
-
+                                    <td class="invert">{{order_item.start_date}}</td>
                                     
 								<td class="invert">Rs {{ order_item.total_price }}</td>
                                 <td class="invert"> {{ points.points_earned }}</td> 

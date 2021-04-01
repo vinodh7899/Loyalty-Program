@@ -13,14 +13,20 @@ import random
 from datetime import datetime
 from django.http import HttpResponse
 
-def create_ref_code(size=10, chars= string.digits):
-    return ''.join(random.choice(chars) for _ in range(size))
+def create_ref_code():
+    a=1
+    b=1
+    b+=a
+    b=str(b)
+    return '000000000'+b
 
 def products(request):
+    # grocery items displaying
     prod_list = Item.objects.all()
     return render(request,'loyaltypoints/index.html',{'produc':prod_list})
 
 def customerprofile(request):
+    # Customer Profile Page
     details = loyaltycoins.objects.filter(user=request.user,points_exp__lt=datetime.now())
     for detai in details:
         detai.point_status=True
@@ -37,7 +43,7 @@ def customerprofile(request):
     if not total_earned.get('points_earned__sum'):
         total_earned['points_earned__sum']=0
 
-  
+    # updating Total Points in customer profile page
     details.total_points=total_earned.get('points_earned__sum')-total_redeem1.get('points_redeem__sum')
     details.save()
     
@@ -50,7 +56,9 @@ def customerprofile(request):
    
 
 def add_to_cart(request, slug):
+    # add to cart Functionality
     item = get_object_or_404(Item, slug=slug)
+   
     order_item, created = orderitem.objects.get_or_create(
         item_details=item,
         user=request.user,
@@ -61,7 +69,13 @@ def add_to_cart(request, slug):
         order1 = order_qs[0]
         # check if the order item is in the order
         if order1.products.filter(item_details__slug=item.slug).exists():
+            
+
             order_item.quantity += 1
+            if order_item.quantity>=5:
+                order_item.quantity=5
+
+
             
             order_item.save()
             
@@ -72,7 +86,7 @@ def add_to_cart(request, slug):
             order1.products.add(order_item)
             messages.info(request, "This item was added to your cart.")
             return redirect("loyaltypoints:order-summary")
-     
+     #Order Creating
     else:      
         order1 = order.objects.create(
             user=request.user)
@@ -104,6 +118,7 @@ def remove_single_item_from_cart(request, slug):
                 order1.products.remove(order_item)
             messages.info(request, "This item quantity was updated.")
             return redirect("loyaltypoints:order-summary")
+        
         else:
             messages.info(request, "This item was not in your cart")
             return redirect("loyaltypoints:order-summary", slug=slug)
@@ -136,7 +151,7 @@ class Checkout(View):
 
 
 
-
+# Completing the order
 def completeorder2(request,slug):
     objec = order.objects.get(user=request.user,orderid=slug)
     
@@ -239,6 +254,7 @@ def completeorder2(request,slug):
                 return redirect('loyaltypoints:order-summary')
     return render(request,'loyaltypoints/ordersummary.html',context)
 
+# after Succesfully order placed
 def referid(request,slug):
     orde2 = order.objects.last()
     id1 = orde2.orderid

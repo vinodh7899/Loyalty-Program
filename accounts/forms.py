@@ -2,6 +2,7 @@ from loyaltypoints.models import *
 from django.forms import ModelForm
 from django import forms
 from django.core import validators
+from django.core.validators import RegexValidator
 
 CITY_CHOICES =( 
     ("Bengaluru", "Bengaluru"), 
@@ -10,12 +11,12 @@ CITY_CHOICES =(
 )
 
 class RegisterForm(forms.Form):
-    Name = forms.CharField(widget=forms.TextInput(attrs={'class':"input--style-4",'pattern':'[A-Za-z ]+', 'title':'Enter Characters Only '}))
-    username = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-4'}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'input--style-4','pattern':"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}",'title':"Please Enter Valid Email Id eg:V****@mail.com"}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'input--style-4','pattern':"(?=.*\d)(?=.*[a-z]).{8,}",'title':'Must contain at least one number and one  letter, and at least 8 or more characters'}))
+    Name = forms.CharField(widget=forms.TextInput(attrs={'class':"input--style-4"}),validators=[RegexValidator(regex=r'[A-Za-z]+',message=('Name Should Contains Alphabets')),])
+    username = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-4'}),validators=[RegexValidator(regex=r'^[a-zA-Z0-9]*$',message=('Username must be Alphanumeric')),])
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'input--style-4'}),validators=[RegexValidator(regex=r'[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}',message=('Eg: v***@gmail.com')),])
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'input--style-4'}),validators=[RegexValidator(regex=r'(?=.*\d)(?=.*[a-z]).{8,}',message=('Password Must have 1 letter and 1 number and atleast 8 characters or more')),])
     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'input--style-4'}))
-    mobile = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-4','pattern':'[6-9]{4}[0-9]{6}','title':"Please Enter Valid 10 Mobile Number"}))
+    mobile = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-4'}),validators=[RegexValidator(regex=r'[6-9]{1}[0-9]{9}',message=('Please Enter a Valid 10 digit mobile number')),])
     default_address = forms.CharField(widget=forms.TextInput(attrs={'class':'input--style-4'}))
     city = forms.ChoiceField(choices=CITY_CHOICES,required=True)
 
@@ -24,6 +25,7 @@ class RegisterForm(forms.Form):
         self.fields['city'].widget.attrs['class'] = 'input--style-4'
         
 
+'''
 
     def clean(self):
       super(RegisterForm, self).clean()
@@ -35,7 +37,7 @@ class RegisterForm(forms.Form):
       default_address = self.cleaned_data.get('default_address')
 
 
-'''
+
       # validating the username and password
       if not Name:
           self._errors['Name'] = self.error_class(['Please Enter a Valid Name'])

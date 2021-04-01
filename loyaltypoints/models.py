@@ -26,8 +26,13 @@ class Item(models.Model):
     price = models.FloatField()
     img = models.ImageField(upload_to="pics")
     discount_price = models.FloatField()
+    discount = models.FloatField(blank=True)
     category = models.CharField(choices=CATEGORY_CHOICES,max_length=1)
     slug = models.SlugField()
+
+    def discountt(self):
+        self.discount = self.price-self.discount_price
+        return self.discount
 
     def get_add_to_cart_url(self):
         return reverse("loyaltypoints:add-to-cart", kwargs={
