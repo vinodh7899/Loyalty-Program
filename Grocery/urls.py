@@ -26,5 +26,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("",include('loyaltypoints.urls',namespace='loyaltypoints')),
     path("",include('accounts.urls')),
-    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 
+
 ]
