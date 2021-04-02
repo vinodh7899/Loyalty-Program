@@ -10,7 +10,7 @@ from django.views.generic import CreateView
 
 def logout(request):
     auth.logout(request)
-    return redirect("http://127.0.0.1:8000/")
+    return redirect("/")
 
 
 def login(request):
