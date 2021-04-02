@@ -87,7 +87,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</li>
 					
 					{% if user.is_authenticated %}
-					<li><a href="/customerprofile2">Welcome {{user.first_name}}</a></li>
+					<li><a href="{% url 'loyaltypoints:customerprofile2' %}">Welcome {{user.first_name}}</a></li>
 					
 					{% else %}
 					<li>
@@ -97,11 +97,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					{% endif %}
 
 					{% if user.is_authenticated %}
-					<li><a href="/logout">Sign Out</a></li>
+					<li><a href="{% url 'accounts:logout' %}">Sign Out</a></li>
 					{% else %}
 					<li>
 
-						<a href="/register"> 
+						<a href="{% url 'accounts:register2' %}"> 
 							<span class="fa fa-pencil-square-o" aria-hidden="true"></span> Sign Up </a>
 					</li>
 					{% endif %}

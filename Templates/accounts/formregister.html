@@ -31,7 +31,7 @@
                         <p  style="color: rgb(240, 6, 6);">{{ error_message }}</p>
                     {% endif %}
                     <br>
-						<form action="http://127.0.0.1:8000/register2/" method="post"  novalidate>
+						<form action="{% url 'accounts:register2' %}" method="post"  novalidate>
                         {% csrf_token %}
 
                     

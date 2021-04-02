@@ -24,7 +24,7 @@
             {% endif %}
             <br>
 
-                    <form action="http://127.0.0.1:8000/login/" method="post">
+                    <form action="{% url 'accounts:login' %}" method="post">
 
                           {% csrf_token %}
                           <div class="input-group">

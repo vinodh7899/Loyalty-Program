@@ -137,21 +137,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<span class="fa fa-phone" aria-hidden="true"></span> 001 234 5678
 					</li>
 					{% if user.is_authenticated %}
-					<li><a href="http://127.0.0.1:8000/customerprofile2">Welcome {{user.first_name}}</a></li>
+					<li><a href="{% url 'loyaltypoints:customerprofile2' %}">Welcome {{user.first_name}}</a></li>
 					
 					{% else %}
 					<li>
-						<a href="http://127.0.0.1:8000/login" data-toggle="modal" data-target="#myModal1">
+						<a href="{% url 'accounts:login' %}" data-toggle="modal" data-target="#myModal1">
 							<span class="fa fa-unlock-alt" aria-hidden="true"></span> Sign In </a>
 					</li>
 					{% endif %}
 
 					{% if user.is_authenticated %}
-					<li><a href="http://127.0.0.1:8000/logout">Sign Out</a></li>
+					<li><a href="{% url 'accounts:logout' %}">Sign Out</a></li>
 					{% else %}
 					<li>
 
-						<a href="http://127.0.0.1:8000/register2">
+						<a href="{% url 'accounts:register2' %}">
 							<span class="fa fa-pencil-square-o" aria-hidden="true"></span> Sign Up </a>
 					</li>
 					{% endif %}

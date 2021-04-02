@@ -6,7 +6,7 @@ app_name = 'accounts'
 
 
 urlpatterns =[
-    path("register2/",register_user,name='register'),
+    path("register2/",register_user,name='register2'),
     path("login/",login,name='login'),
     path("logout/",logout,name='logout'),
     path("passwordchanged/",passwordsucess),
