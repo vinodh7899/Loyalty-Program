@@ -13,12 +13,8 @@ import random
 from datetime import datetime
 from django.http import HttpResponse
 
-def create_ref_code():
-    a=1
-    b=1
-    b+=a
-    b=str(b)
-    return '000000000'+b
+def create_ref_code(size=10, chars= string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
 
 def products(request):
     # grocery items displaying

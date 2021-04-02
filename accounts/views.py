@@ -23,7 +23,7 @@ def login(request):
             user = auth.authenticate(username=uname,password=pwd1)
             if user is not None:
                 auth.login(request,user)
-                return redirect('http://127.0.0.1:8000/')
+                return redirect('/')
             else:
                 return render(request, 'accounts/login.html', {
                     'form': form,
