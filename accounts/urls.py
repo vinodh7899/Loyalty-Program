@@ -2,10 +2,13 @@ from django.urls import path,include
 from .views import *
 from django.contrib.auth import views as auth_views
 
+app_name = 'accounts'
+
+
 urlpatterns =[
-    path("register2/",register_user),
-    path("login/",login),
-    path("logout/",logout),
+    path("register2/",register_user,name='register'),
+    path("login/",login,name='login'),
+    path("logout/",logout,name='logout'),
     path("passwordchanged/",passwordsucess),
     path(
         'change-password/',
