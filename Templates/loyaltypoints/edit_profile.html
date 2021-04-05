@@ -17,7 +17,7 @@
                 <p class="bg-danger p-d ml-b">{{ error_message }}</p>
             {% endif %}
 
-                    <form action="http://127.0.0.1:8000/editprofile/" method="post">
+                    <form action="{% url 'loyaltypoints:editprofile' %}" method="post">
 
                           {% csrf_token %}
                           <div class="col-2">
@@ -33,7 +33,7 @@
                           </div>
                     </form>
                 </p>
-                <h3><a href="http://127.0.0.1:8000/customerprofile2/">Click here to go back</a></h3>
+                <h3><a href="{% url 'loyaltypoints:customerprofile2' %}">Click here to go back</a></h3>
                 
             <br>
                     <div class="clearfix"></div>
