@@ -323,7 +323,7 @@ def edit(request):
             user_update.city=city_
             user_update.state=state_
             user_update.save()
-            return redirect("http://127.0.0.1:8000/customerprofile2")      
+            return redirect("loyaltypoints:customerprofile2")      
     context = {'form':form,'userp':userp} 
     return render(request,"loyaltypoints/edit_profile.html",context)
 
